@@ -1,0 +1,31 @@
+inline const max_y = 20;
+
+//First, we need a behavior to move the ball. We'll call it "mover".
+createBehavior!("mover", {
+    //Next, we need to actually move the ball. We use setValAction to do this. It sets a variable to something each frame, as opposed to setVal, which sets the object's starting value.
+    //The "{}" is called an action body. It contains code statements.
+    setValAction!("base.transform.y", {0});
+    setValAction!("base.transform.x", {0});
+    setValAction!("base.transform.scale_x", {1});
+    setValAction!("base.transform.scale_y", {1});
+    setDisplay!({
+        display color = c_7;
+        //display fill 
+        display thickness = 10;
+        //display click = true;
+        //display drag = xy;
+        display hidden = false;
+    });
+});
+
+//Now that we have our behavior, we can create an object.
+//We'll first create an object.
+createObject!({
+    //Next, we'll attach the mover behavior to it to make it move.
+    
+    useBehavior!("point");
+    useBehavior!("mover");
+    
+    //Finally, we'll add a circle renderer to it so that it displays.
+    
+});

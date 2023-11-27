@@ -8,8 +8,17 @@ polygon({
     const x = 0;
     const y = 0;
 
-    const x_scale = 100;
-    const y_scale = 100;
+    const x_scale = 0;
+    const y_scale = 0;
 
     state = (x, y) + x_scale*[(-1/2, 0), (1/2, 0), (1/2, 0), (-1/2, 0)] + y_scale*[(0, -1/2), (0, -1/2), (0, 1/2), (0, 1/2)];
+});
+
+createObject!({
+    //Next, we'll attach the mover behavior to it to make it move.
+    
+    useBehavior!("block");
+    
+    //Finally, we'll add a circle renderer to it so that it displays.
+    
 });
