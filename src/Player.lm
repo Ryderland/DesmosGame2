@@ -1,38 +1,28 @@
 inline const speed = 0.1;
 
-//First, we need a behavior to move the ball. We'll call it "mover".
+//Controller
 createBehavior!("mover", {
-    //Next, we need to actually move the ball. We use setValAction to do this. It sets a variable to something each frame, as opposed to setVal, which sets the object's starting value.
-    //The "{}" is called an action body. It contains code statements.
-    setVal!("base.transform.y", {0});
-    setVal!("base.transform.x", {0});
+
+    //controller pos
+    setValAction!("base.transform.y", {
+    
+    });
+    setValAction!("base.transform.x", {0});
     setValAction!("base.transform.scale_x", {1});
     setValAction!("base.transform.scale_y", {1});
+    
+    //creates and sets y and x speeds
     setVal!("v", 0);
     setVal!("h", 0);
     setInline!("v");
     setInline!("h");
+    
     setValAction!("v", {
-    state=0;
-    if(getVal!("base.transform.y") > 0)
-    {
-    state = speed;
-    }
-    else if(getVal!("base.transform.y") < 0)
-    {
-    state = -speed;
-    }
+    state = (getVal!("base.transform.y")/(sqrt(getVal!("base.transform.y")^2 + getVal!("base.transform.x")^2))) * speed;
     });
+    
     setValAction!("h", {
-    state=0;
-    if(getVal!("base.transform.x") > 0)
-    {
-    state = speed;
-    }
-    else if(getVal!("base.transform.x") < 0)
-    {
-    state = -speed;
-    }
+    state = (getVal!("base.transform.x")/(sqrt(getVal!("base.transform.y")^2 + getVal!("base.transform.x")^2))) * speed;
     });
 
     //setValAction!("base.transform.x", {0});
@@ -40,18 +30,36 @@ createBehavior!("mover", {
         display color = c_7;
         //display fill 
         display thickness = 10;
-        //display click = true;
         //display drag = xy;
         display hidden = false;
     });
 });
 
 createObject!({
-    //Next, we'll attach the mover behavior to it to make it move.
-    
     useBehavior!("point");
     useBehavior!("mover");
+});
+
+
+createBehavior!("control_box", {
+
+    //controller pos
+    setVal!("base.transform.y", {0});
+    setVal!("base.transform.x", {0});
+    setValAction!("base.transform.scale_x", {5});
+    setValAction!("base.transform.scale_y", {3});
     
-    //Finally, we'll add a circle renderer to it so that it displays.
-    
+    //setValAction!("base.transform.x", {0});
+    setDisplay!({
+        display color = c_7;
+        display fill = 0;
+        display thickness = 2;
+        //display drag = xy;
+        display hidden = false;
+    });
+});
+
+createObject!({
+ useBehavior!("square");
+ useBehavior!("control_box");
 });
