@@ -4,6 +4,8 @@ inline const max_y = 20;
 createBehavior!("mover", {
     //Next, we need to actually move the ball. We use setValAction to do this. It sets a variable to something each frame, as opposed to setVal, which sets the object's starting value.
     //The "{}" is called an action body. It contains code statements.
+    setVal!("v", 1);
+    setInline!("v");
     setValAction!("base.transform.y", {0});
     setValAction!("base.transform.x", {0});
     setValAction!("base.transform.scale_x", {1});

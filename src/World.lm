@@ -5,25 +5,32 @@ display fill = 1;
 display thickness = 0;
 display stroke = 0;
 display click = g_o;
-
-polygon({
-    const x = 0;
-    const y = 0;
-
-    const x_scale = 100;
-    const y_scale = 100;
-
-    state = (x, y) + x_scale*[(-1/2, 0), (1/2, 0), (1/2, 0), (-1/2, 0)] + y_scale*[(0, -1/2), (0, -1/2), (0, 1/2), (0, 1/2)];
 });
+//setValAction!("base.transform.y", {0});
+//setValAction!("base.transform.x", {0});
+//setMut!("vert");
+setVal!("vert", {0});
+setMut!("vert");  
+    
+    setValAction!("base.transform.y", {
+        //Add the mul to the current y value.
+        state = y + getVal!("vert");
+    });
+    setValAction!("vert", {
+     state = 0;
 
-});
+            selectBehavior!("mover", {
+                state = getValSelect!("mover.v");
+        });
+    });
 });
 
 createObject!({
     //Next, we'll attach the mover behavior to it to make it move.
     
     useBehavior!("block");
+    useBehavior!("square");
     
     //Finally, we'll add a circle renderer to it so that it displays.
-    
+     
 });
