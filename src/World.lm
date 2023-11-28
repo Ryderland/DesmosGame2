@@ -6,23 +6,24 @@ display thickness = 0;
 display stroke = 0;
 display click = g_o;
 });
-//setValAction!("base.transform.y", {0});
-//setValAction!("base.transform.x", {0});
-//setMut!("vert");
-setVal!("vert", {0});
-setMut!("vert");  
-    
-    setValAction!("base.transform.y", {
-        //Add the mul to the current y value.
-        state = y + getVal!("vert");
-    });
-    setValAction!("vert", {
-     state = 0;
+setVal!("base.transform.y", {4});
+setVal!("base.transform.x", {4});
 
-            selectBehavior!("mover", {
-                state = getValSelect!("mover.v");
+    //sets y pos to controller y value 
+    setValAction!("base.transform.y", {
+     state = 0;
+        selectBehavior!("mover", {
+                state = y + getValSelect!("mover.v");
         });
     });
+    //sets x pos to controller x value
+     setValAction!("base.transform.x", {
+     state = 0;
+        selectBehavior!("mover", {
+                state = x + getValSelect!("mover.h");
+        });
+    });
+  
 });
 
 createObject!({
