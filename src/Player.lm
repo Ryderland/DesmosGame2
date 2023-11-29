@@ -1,16 +1,24 @@
 inline const speed = 0.1;
+inline const xcbox = 5;
+inline const ycbox = 3;
+
+createBehavior!("dev_square", {
+    behaviorCustom!({
+    if(getVal!("base.transform.y") > ycbox/2){
+        point (getVal!("base.transform.x"), getVal!("base.transform.y"));
+        point (getVal!("base.transform.x") + getVal!("base.transform.scale_x")/2, getVal!("base.transform.y") + getVal!("base.transform.scale_y")/2);}
+    }, -400);
+});
 
 //Controller
 createBehavior!("mover", {
 
     //controller pos
-    setValAction!("base.transform.y", {
-    
-    });
-    setValAction!("base.transform.x", {0});
+    setVal!("base.transform.y", {0});
+    setVal!("base.transform.x", {0});
     setValAction!("base.transform.scale_x", {1});
     setValAction!("base.transform.scale_y", {1});
-    
+    //setValAction!("display.drag", {(4,4)});
     //creates and sets y and x speeds
     setVal!("v", 0);
     setVal!("h", 0);
@@ -30,14 +38,17 @@ createBehavior!("mover", {
         display color = c_7;
         //display fill 
         display thickness = 10;
-        //display drag = xy;
+        //dirag.y = 4;
         display hidden = false;
+        
     });
 });
 
 createObject!({
     useBehavior!("point");
     useBehavior!("mover");
+    useBehavior!("dev_square");
+    
 });
 
 
@@ -46,8 +57,8 @@ createBehavior!("control_box", {
     //controller pos
     setVal!("base.transform.y", {0});
     setVal!("base.transform.x", {0});
-    setValAction!("base.transform.scale_x", {5});
-    setValAction!("base.transform.scale_y", {3});
+    setValAction!("base.transform.scale_x", {xcbox});
+    setValAction!("base.transform.scale_y", {ycbox});
     
     //setValAction!("base.transform.x", {0});
     setDisplay!({

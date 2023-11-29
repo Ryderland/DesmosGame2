@@ -31,7 +31,8 @@ createObject!({
     
     useBehavior!("block");
     useBehavior!("square");
-    
+    useBehavior!("square_collider");
+
     //Finally, we'll add a circle renderer to it so that it displays.
      
 });
