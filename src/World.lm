@@ -1,38 +1,99 @@
 createBehavior!("block", {
-setDisplay!({
-display color = c_7;
-display fill = 1;
-display thickness = 0;
-display stroke = 0;
-display click = g_o;
+setVal!("base.transform.y", {0});
+setVal!("base.transform.x", {0});
+
+setVal!("base.transform.scale_y", {10});
+setVal!("base.transform.scale_x", {10});
+
+setVal!("rot", {-1});
+
+ setDisplay!({
+    display color = c_7;
+    display fill = 1;
+    display thickness = 0;
+    display stroke = 0;
+    display click = g_o;
+
 });
-setVal!("base.transform.y", {4});
-setVal!("base.transform.x", {4});
+
 
     //sets y pos to controller y value 
-    setValAction!("base.transform.y", {
+    setValAction!("base.transform.scale_y", {
      state = 0;
         selectBehavior!("mover", {
-                state = y + getValSelect!("mover.v");
+                state = scale_y + getValSelect!("mover.v");
         });
     });
     //sets x pos to controller x value
-     setValAction!("base.transform.x", {
+     setValAction!("base.transform.scale_x", {
      state = 0;
         selectBehavior!("mover", {
-                state = x + getValSelect!("mover.h");
+                state = scale_x + getValSelect!("mover.v");
         });
     });
   
 });
 
 createObject!({
-    //Next, we'll attach the mover behavior to it to make it move.
-    
+   
     useBehavior!("block");
-    useBehavior!("square");
+    useBehavior!("wall");
+     useBehavior!("floor");
     useBehavior!("square_collider");
+});
 
-    //Finally, we'll add a circle renderer to it so that it displays.
-     
+createBehavior!("wall", {
+    //Do the drawing. Put it at -75 to make it in render layer but after the initial render.
+    behaviorCustom!({
+        //We'll draw a small square.
+        getDisplay!();
+        display fill = 1;
+        display color = c_3;
+    
+        polygon({
+            const x = getVal!("base.transform.x");
+            const y = getVal!("base.transform.y");
+            const x_scale = getVal!("base.transform.scale_x")*.35;
+            const y_scale = getVal!("base.transform.scale_y")*.35;
+            const rotation = getVal!("base.transform.rotation");
+        
+            state = (x, y) + [(getVal!("rot"), -1/2), (1/2, -1/2), (1/2, 1/2), (-1/2, 1/2)].map(s_point => {
+                const new_x = x_scale*s_point.x;
+                const new_y = y_scale*s_point.y;
+                
+                const rotated_x = g_sr_r(new_x, -new_y, rotation);
+                const rotated_y = g_sr_r(new_y, new_x, rotation);
+                
+                state = (rotated_x, rotated_y);
+            });
+        });
+    }, -75);
+});
+
+createBehavior!("floor", {
+    //Do the drawing. Put it at -75 to make it in render layer but after the initial render.
+    behaviorCustom!({
+        //We'll draw a small square.
+        getDisplay!();
+        display fill = 1;
+        display color = c_1;
+    
+        polygon({
+            const x = getVal!("base.transform.x");
+            const y = getVal!("base.transform.y");
+            const x_scale = getVal!("base.transform.scale_x")*.35;
+            const y_scale = getVal!("base.transform.scale_y")*.35;
+            const rotation = getVal!("base.transform.rotation");
+        
+            state = (x, y) + [(-1/2, -1/2), (1/2, -1/2), (2, -2), (-2, -2)].map(s_point => {
+                const new_x = x_scale*s_point.x;
+                const new_y = y_scale*s_point.y;
+                
+                const rotated_x = g_sr_r(new_x, -new_y, rotation);
+                const rotated_y = g_sr_r(new_y, new_x, rotation);
+                
+                state = (rotated_x, rotated_y);
+            });
+        });
+    }, -78);
 });
